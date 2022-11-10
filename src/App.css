@@ -11,7 +11,21 @@ body {
   background: rgb(251, 254, 255);
   height: auto;
 }
+/* .profileModule {
+  overflow: auto;
+  display: flex;
+  flex: 1;
+} */
 
+.scrollbarRoot {
+  display: flex;
+  max-height: unset !important;
+}
+
+.scrollbarView {
+  flex: 1 1;
+  max-height: unset !important;
+}
 .top-news {
   margin: 30px auto;
   display: grid;
@@ -28,4 +42,9 @@ body {
 .logo{
   width: 20%;
   height: 80%;
+}
+
+.article-img{
+  height: 40%;
+  width: 50%;
 }

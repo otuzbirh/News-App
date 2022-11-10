@@ -8,7 +8,7 @@ const Navigation = ({handleChange}) => {
     <Box
         sx={{display: 'flex', borderBottom: '2px solid grey', justifyContent: 'center',
             width: '100%', height: '100px', alignItems: "center", border: "1px", backgroundColor: "white", 
-            color: "black", boxShadow: '5px 5px 21px rgba(0, 0, 0, 0.1)', borderRadius: '40px', marginTop: '15px'}}
+            color: "black", boxShadow: '5px 5px 21px rgba(0, 0, 0, 0.1)', borderRadius: '40px', marginTop: '10px', marginBottom: "10px" }}
     >
     <Link sx={{cursor: 'pointer'}}>
       <img className="logo" src={Logo}></img>
