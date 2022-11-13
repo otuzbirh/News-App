@@ -1,7 +1,7 @@
 import s from './App.css';
 import Navigation from './components/Navigation.js'
 import AnimatedSection from './components/animations/animatedSection';
-import Home from './pages/Home'
+import Home, { HomeContextProvider } from './pages/Home'
 import { NewsContextProvider } from './NewsContext'
 import {Routes, Route} from 'react-router-dom'
 import Article from './components/Article'
@@ -14,7 +14,7 @@ function App() {
   return (
    <>
     
-   <NewsContextProvider>
+   {/* <NewsContextProvider> */}
    <Navigation />
    <AnimatedSection>
   
@@ -25,8 +25,8 @@ function App() {
         view: s.scrollbarView, }}
       >
           <Routes>
-    <Route  path='/' exact element={  <Home /> } />
-    <Route path="/article/:id" exact element={ <Article />} />
+    <Route  path='/' exact element={  <HomeContextProvider /> } />
+    <Route path="/article/:id" exact element={ <HomeContextProvider> <Article /> </HomeContextProvider> } />
     </Routes>
     </Scrollbars>
    </AnimatedSection>
@@ -36,7 +36,7 @@ function App() {
      <Typography component="h1"> Crafted with {<FavoriteIcon/>} by Hadžo</Typography>
   
     </BottomNavigation>
-   </NewsContextProvider>
+   {/* </NewsContextProvider> */}
    
    </>  
   );

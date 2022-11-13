@@ -9,7 +9,7 @@ const News = ({data}) => {
     const char = "/" 
 
     return (
-        <Box sx={{ width: '350px',  height: '500px',  display: 'flex', flexDirection: "column", justifyContent: "center", alignItems: "center", borderRadius: "18px",
+        <Box sx={{ width: '350px',  height: '500px', maxHeight: '700px',  display: 'flex', flexDirection: "column", justifyContent: "center", alignItems: "center", borderRadius: "18px",
                 boxShadow: '5px 5px 21px rgba(0, 0, 0, 0.1)', padding: '10px' }}>
 
             <Box sx={{ width: '90%', height: "40%" }}>
