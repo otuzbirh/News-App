@@ -1,21 +1,17 @@
 import s from './App.css';
 import Navigation from './components/Navigation.js'
 import AnimatedSection from './components/animations/animatedSection';
-import Home, { HomeContextProvider } from './pages/Home'
-import { NewsContextProvider } from './NewsContext'
+import  { HomeContextProvider } from './pages/Home'
 import {Routes, Route} from 'react-router-dom'
 import Article from './components/Article'
 import { Scrollbars } from "rc-scrollbars"
 import {BottomNavigation, Typography} from '@mui/material';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
 function App() {
   return (
    <>
-    
-   {/* <NewsContextProvider> */}
-   <Navigation />
+       <Navigation />
    <AnimatedSection>
   
       <Scrollbars
@@ -36,7 +32,6 @@ function App() {
      <Typography component="h1"> Crafted with {<FavoriteIcon/>} by Hadžo</Typography>
   
     </BottomNavigation>
-   {/* </NewsContextProvider> */}
    
    </>  
   );

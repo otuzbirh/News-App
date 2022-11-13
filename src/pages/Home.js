@@ -10,22 +10,20 @@ import { useLocation } from 'react-router-dom'
 
 export const HomeContext = createContext()
 
+
 export const HomeContextProvider = (props) => {
 
   const location = useLocation()
-
-
-
-  // const {data} = useContext(NewsContext)
   const apiKey1 = "f44c512ec55841cfa048d39894c57d13";
   const apiKey2 = "d3a68d3a93a54948a016a1553bc4d20c";
   const [search, setSearch] = useState("")
   const [filteredData, setFilteredData] = useState({})
   const [isSearched, setIsSearched] = useState(false)
-  const [realData, setRealData] = useState({})
   const [data, setData] = useState([])
-  const [api, setApi] = useState(`https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=${apiKey2}`)
-
+  const [apiData, setApiData] = useState([])
+  const [api, setApi] = useState(`https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=${apiKey1}`)
+  const [counter, setCounter] = useState(0)
+  const [condition, setCondition] = useState(false)
 
 
   //modal logic
@@ -34,6 +32,7 @@ export const HomeContextProvider = (props) => {
   const [date, setDate] = useState("2022-11-10");
   const [word, setWord] = useState("a");
   const [category, setCategory] = useState("general");
+  const [isClicked, setIsClicked] = useState(false)
 
   const handleSortButtonClick = () => {
     setOpen(true);
@@ -44,7 +43,7 @@ export const HomeContextProvider = (props) => {
   };
 
   const handleModalSubmit = () => {
-    setApi(`https://newsapi.org/v2/everything?q=${word}&from=${date}&sortBy=${category}&apiKey=${apiKey2}`)
+    setApi(`https://newsapi.org/v2/everything?q=${word}&from=${date}&sortBy=${category}&apiKey=${apiKey1}`)
     setOpen(false);
     setIsSearched(false);
     setSearch("");
@@ -52,31 +51,66 @@ export const HomeContextProvider = (props) => {
     console.log(date, category, word)
   }
 
+  //modal logic end
+
   function fetchData() {
     axios
       .get(api)
-      .then((response) => setData(response.data)
+      .then((response) => {setApiData(response.data)}
       )
       .catch((error) => console.log(error));
 
   }
 
 
+  function handleData() {
+     if(apiData?.articles?.length > 20 ) {
+        const slicedData = apiData?.articles?.slice(0, 20);
+        setData(slicedData);
+        console.log("data",data);
+        // setCounter(prevCounter => prevCounter + 1);
+     } else {
+      setData(apiData.articles);
+      // setCounter(prevCounter => prevCounter + 1);
 
+     }
+  }
 
-  const filteredPageData = data?.articles?.filter((item) => (item.title?.toLowerCase().includes(search.toLowerCase()) ||
+  const filteredPageData = data?.filter((item) => (item.title?.toLowerCase().includes(search.toLowerCase()) ||
     item.description?.toLowerCase().includes(search.toLowerCase()) ||
     item.content?.toLowerCase().includes(search.toLowerCase()) ||
     item.author?.toLowerCase().includes(search.toLowerCase()) ||
     item.source.name?.toLowerCase().includes(search.toLowerCase())))
 
+
+   const showButton = () => {
+    if(apiData?.articles?.length > 20 && isClicked === false ) {
+      return ( <Button onClick={handleLoadAll}>Load all news</Button> )
+    } else {
+      return ("")
+    }
+   }
+
+   function handleLoadAll() {
+    const allData = apiData.articles
+    setIsClicked(true)
+    setData(allData)
+    // setCounter(prevCounter => prevCounter + 1);
+
+   }
+
+   function loadNews() {
+    setCondition(true)
+   }
+
+
   useEffect(() => {
     fetchData()
+    handleData()
     setFilteredData(filteredPageData);
-    console.log("filteredPageData", filteredPageData)
-    console.log("location", location.pathname)
-
-  }, [search, api])
+    console.log("api data", apiData)
+console.log("data",data)
+  }, [search, api, condition])
 
 
   const renderNews = () => {
@@ -87,6 +121,7 @@ export const HomeContextProvider = (props) => {
           setIsSearched(true);
         }} />
 
+      { condition === false ? <Button onClick={loadNews} sx={{cursor: 'pointer'}}>Click to show available news </Button> : "" }
 
 
         {isSearched &&
@@ -109,12 +144,14 @@ export const HomeContextProvider = (props) => {
 
             search === "" ?
 
-              data ? data?.articles?.map(data => (
+              data ? data?.map(data => (
 
                 <News data={data} key={data.url} />
 
               )
-              ) : <CircularProgress /> :
+             
+
+              )      : <CircularProgress /> :
 
               filteredData?.length !== 0 ? filteredData?.map(data => (
 
@@ -126,8 +163,7 @@ export const HomeContextProvider = (props) => {
 
         </Box>
 
-
-
+        {showButton()}   
       </>
     )
   }
