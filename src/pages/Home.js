@@ -47,8 +47,7 @@ export const HomeContextProvider = (props) => {
     setOpen(false);
     setIsSearched(false);
     setSearch("");
-    console.log("api", api)
-    console.log(date, category, word)
+    
   }
 
   //modal logic end
@@ -67,11 +66,9 @@ export const HomeContextProvider = (props) => {
      if(apiData?.articles?.length > 20 ) {
         const slicedData = apiData?.articles?.slice(0, 20);
         setData(slicedData);
-        console.log("data",data);
-        // setCounter(prevCounter => prevCounter + 1);
+      
      } else {
       setData(apiData.articles);
-      // setCounter(prevCounter => prevCounter + 1);
 
      }
   }
@@ -108,8 +105,7 @@ export const HomeContextProvider = (props) => {
     fetchData()
     handleData()
     setFilteredData(filteredPageData);
-    console.log("api data", apiData)
-console.log("data",data)
+  
   }, [search, api, condition])
 
 
